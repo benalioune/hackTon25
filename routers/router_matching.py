@@ -25,7 +25,11 @@ async def create_opportunity(
             **opportunity_data.dict()
         )
         
-        db.child("opportunities").child(opportunity_id).set(opportunity.dict())
+        # Convertir datetime en string pour Firebase
+        opportunity_dict = opportunity.dict()
+        opportunity_dict['created_at'] = opportunity_dict['created_at'].isoformat()
+        
+        db.child("opportunities").child(opportunity_id).set(opportunity_dict)
         
         # Notifier les étudiants correspondants
         await notify_matching_students(opportunity)
@@ -79,3 +83,29 @@ def calculate_match_score(student_skills: dict, required_skills: list) -> float:
             matched_skills += level_bonus.get(student_skills[skill], 0)
     
     return matched_skills / len(required_skills)
+
+# Fonction pour notifier les étudiants correspondant à une opportunité
+async def notify_matching_students(opportunity):
+    try:
+        students = db.child("students").get().val() or {}
+        required_skills = opportunity.required_skills if hasattr(opportunity, 'required_skills') else opportunity.get('required_skills', [])
+        notified_students = []
+        for student_id, student_data in students.items():
+            student_skills = student_data.get('validated_skills', {})
+            if any(skill in student_skills for skill in required_skills):
+                notification_id = str(uuid.uuid4())
+                notification_data = {
+                    "id": notification_id,
+                    "student_id": student_id,
+                    "type": "opportunity_match",
+                    "opportunity_id": opportunity.id,
+                    "message": f"Nouvelle opportunité correspondant à vos compétences : {opportunity.title}",
+                    "created_at": datetime.now().isoformat(),
+                    "read": False
+                }
+                db.child("notifications").child(notification_id).set(notification_data)
+                notified_students.append(student_id)
+        return len(notified_students)
+    except Exception as e:
+        print(f"Erreur lors de la notification des étudiants: {str(e)}")
+        return 0

@@ -4,8 +4,18 @@ from routers.router_auth import get_current_user
 from database.firebase import db
 from datetime import datetime
 import uuid
+from pydantic import BaseModel
+from typing import Optional, List
 
 router = APIRouter(prefix='/skills', tags=['Validation des Compétences'])
+
+# Nouveau schéma d'entrée sans student_id
+class SkillValidationRequestNoId(BaseModel):
+    skill_name: str
+    level_claimed: CompetenceLevel
+    evidence_description: str
+    portfolio_links: Optional[List[str]] = None
+    project_description: Optional[str] = None
 
 async def notify_relevant_professionals(skill_name: str):
     """Notifie les professionnels compétents dans le domaine de la compétence"""
@@ -42,10 +52,10 @@ async def notify_relevant_professionals(skill_name: str):
 
 @router.post('/validation-request', response_model=SkillValidation, status_code=201)
 async def request_skill_validation(
-    request_data: SkillValidationRequest,
+    request_data: SkillValidationRequestNoId,
     current_user: dict = Depends(get_current_user)
 ):
-    """Étudiant demande la validation d'une compétence"""
+    """Étudiant demande la validation d'une compétence (student_id injecté automatiquement)"""
     if current_user.get('user_type') != 'student':
         raise HTTPException(status_code=403, detail="Réservé aux étudiants")
     
@@ -54,6 +64,7 @@ async def request_skill_validation(
         validation = SkillValidation(
             id=validation_id,
             created_at=datetime.now(),
+            student_id=current_user['uid'],
             **request_data.dict()
         )
         
