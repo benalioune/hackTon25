@@ -9,3 +9,5 @@ configs/firebase_service_account.json
 __pycache__/
 *.py[cod]
 *.pyo
+__pycache__/
+*.pyc
