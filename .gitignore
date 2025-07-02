@@ -6,3 +6,6 @@ __init__
 configs/firebase_config.json
 configs/firebase_service_account.json
 configs/firebase_service_account.json
+__pycache__/
+*.py[cod]
+*.pyo

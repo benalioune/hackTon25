@@ -9,6 +9,14 @@ from typing import Optional, List
 
 router = APIRouter(prefix='/skills', tags=['Validation des Compétences'])
 
+# Nouveau schéma d'entrée sans student_id
+class SkillValidationRequestNoId(BaseModel):
+    skill_name: str
+    level_claimed: CompetenceLevel
+    evidence_description: str
+    portfolio_links: Optional[List[str]] = None
+    project_description: Optional[str] = None
+
 async def notify_relevant_professionals(skill_name: str):
     """Notifie les professionnels compétents dans le domaine de la compétence"""
     try:

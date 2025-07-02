@@ -3,7 +3,7 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.responses import JSONResponse
 from firebase_admin import auth
 from database.firebase import db, authUser
-from classes.schemas_dto import User, StudentCreate, Professional, CompanyCreate
+from classes.schemas_dto import User, StudentCreate, Professional, ProfessionalCreate, CompanyCreate
 from datetime import datetime
 
 # OAuth2 scheme for token extraction
@@ -72,13 +72,17 @@ async def signup_student(student_data: StudentCreate):
 
 # Endpoint d'inscription professionnel
 @router.post('/signup/professional', status_code=201)
-async def signup_professional(professional_data: Professional):
+async def signup_professional(professional_data: ProfessionalCreate):
     try:
-        user = auth.create_user(email=professional_data.email)
+        user = auth.create_user(
+            email=professional_data.email,
+            password=professional_data.password
+        )
         professional_dict = professional_data.dict()
         professional_dict['id'] = user.uid
         professional_dict['user_type'] = 'professional'
         professional_dict['created_at'] = datetime.now().isoformat()
+        del professional_dict['password']  # Ne pas stocker le mot de passe
         db.child("professionals").child(user.uid).set(professional_dict)
         db.child("users").child(user.uid).set({
             "email": professional_data.email,
