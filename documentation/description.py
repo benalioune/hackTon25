@@ -1,5 +1,5 @@
 api_description = """
-## StudyConnect API
+## TalentFlow API
 
 **Plateforme de validation de compétences et mise en relation étudiants-entreprises**
 
