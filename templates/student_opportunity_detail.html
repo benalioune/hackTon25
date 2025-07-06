@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Détails de l'opportunité - StudyConnect</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">StudyConnect</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/student/home">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link text-warning" href="/logout">Déconnexion</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        {% if opportunity %}
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- En-tête de l'opportunité -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div>
+                                    <h1 class="h2 mb-2">{{ opportunity.title }}</h1>
+                                    <p class="text-muted mb-0">
+                                        <i class="bi bi-building me-2"></i>
+                                        {{ opportunity.company_name }}
+                                    </p>
+                                </div>
+                                <span class="badge bg-primary fs-6">{{ opportunity.type }}</span>
+                            </div>
+                            
+                            {% if opportunity.location %}
+                            <p class="text-muted mb-3">
+                                <i class="bi bi-geo-alt me-2"></i>
+                                {{ opportunity.location }}
+                            </p>
+                            {% endif %}
+                            
+                            {% if opportunity.duration %}
+                            <p class="text-muted mb-3">
+                                <i class="bi bi-clock me-2"></i>
+                                {{ opportunity.duration }}
+                            </p>
+                            {% endif %}
+                            
+                            {% if opportunity.compensation %}
+                            <p class="text-muted mb-3">
+                                <i class="bi bi-cash me-2"></i>
+                                {{ opportunity.compensation }}
+                            </p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    {% if opportunity.description %}
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="bi bi-file-text me-2"></i>Description</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">{{ opportunity.description }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Compétences requises -->
+                    {% if opportunity.required_skills %}
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="bi bi-award me-2"></i>Compétences requises</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex flex-wrap gap-2">
+                                {% for skill in opportunity.required_skills %}
+                                <span class="badge bg-secondary fs-6">{{ skill }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="col-lg-4">
+                    <!-- Informations sur l'entreprise -->
+                    {% if opportunity.company_data %}
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="bi bi-building me-2"></i>À propos de l'entreprise</h5>
+                        </div>
+                        <div class="card-body">
+                            <h6>{{ opportunity.company_data.name }}</h6>
+                            {% if opportunity.company_data.sector %}
+                            <p class="text-muted mb-2">
+                                <strong>Secteur:</strong> {{ opportunity.company_data.sector }}
+                            </p>
+                            {% endif %}
+                            {% if opportunity.company_data.size %}
+                            <p class="text-muted mb-2">
+                                <strong>Taille:</strong> {{ opportunity.company_data.size }}
+                            </p>
+                            {% endif %}
+                            {% if opportunity.company_data.city %}
+                            <p class="text-muted mb-2">
+                                <strong>Localisation:</strong> {{ opportunity.company_data.city }}, {{ opportunity.company_data.country }}
+                            </p>
+                            {% endif %}
+                            {% if opportunity.company_data.description %}
+                            <p class="text-muted mb-3">{{ opportunity.company_data.description[:200] }}{% if opportunity.company_data.description|length > 200 %}...{% endif %}</p>
+                            {% endif %}
+                            {% if opportunity.company_data.website %}
+                            <a href="{{ opportunity.company_data.website }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-globe me-1"></i>Site web
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Actions -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="bi bi-lightning me-2"></i>Actions</h5>
+                        </div>
+                        <div class="card-body">
+                            <button class="btn btn-primary w-100 mb-2">
+                                <i class="bi bi-send me-2"></i>Postuler
+                            </button>
+                            <button class="btn btn-outline-secondary w-100 mb-2">
+                                <i class="bi bi-bookmark me-2"></i>Sauvegarder
+                            </button>
+                            <button class="btn btn-outline-info w-100">
+                                <i class="bi bi-share me-2"></i>Partager
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Informations supplémentaires -->
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="bi bi-info-circle me-2"></i>Informations</h5>
+                        </div>
+                        <div class="card-body">
+                            {% if opportunity.created_at %}
+                            <p class="text-muted mb-2">
+                                <strong>Publiée le:</strong> 
+                                {{ opportunity.created_at.split('T')[0] if 'T' in opportunity.created_at else opportunity.created_at }}
+                            </p>
+                            {% endif %}
+                            <p class="text-muted mb-0">
+                                <strong>ID:</strong> {{ opportunity.id }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <i class="bi bi-exclamation-triangle text-warning" style="font-size: 3rem;"></i>
+                <h3 class="mt-3">Opportunité non trouvée</h3>
+                <p class="text-muted">L'opportunité que vous recherchez n'existe pas ou n'est plus disponible.</p>
+                <a href="/student/home" class="btn btn-primary">
+                    <i class="bi bi-arrow-left me-2"></i>Retour au dashboard
+                </a>
+            </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

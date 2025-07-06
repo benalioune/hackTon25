@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Inscription</title>
+    <script>
+    function showFields() {
+        var type = document.getElementById('user_type').value;
+        document.getElementById('student_fields').style.display = (type === 'student') ? 'block' : 'none';
+        document.getElementById('company_fields').style.display = (type === 'company') ? 'block' : 'none';
+        document.getElementById('professional_fields').style.display = (type === 'professional') ? 'block' : 'none';
+    }
+    </script>
+</head>
+<body onload="showFields()">
+    <h2>Inscription</h2>
+    {% if error %}<p style="color:red;">{{ error }}</p>{% endif %}
+    <form method="post" action="/signup">
+        <label>Type d'utilisateur :
+            <select name="user_type" id="user_type" onchange="showFields()">
+                <option value="student">Étudiant</option>
+                <option value="company">Entreprise</option>
+                <option value="professional">Professionnel</option>
+            </select>
+        </label><br><br>
+        <label>Email : <input type="email" name="email" required></label><br>
+        <label>Mot de passe : <input type="password" name="password" required></label><br>
+        <div id="student_fields" style="display:none;">
+            <label>Prénom : <input type="text" name="first_name"></label><br>
+            <label>Nom : <input type="text" name="last_name"></label><br>
+            <label>École : <input type="text" name="school"></label><br>
+            <label>Formation : <input type="text" name="formation"></label><br>
+            <label>Année d'étude : <input type="number" name="year_of_study"></label><br>
+        </div>
+        <div id="company_fields" style="display:none;">
+            <label>Nom de l'entreprise : <input type="text" name="name"></label><br>
+            <label>Secteur : <input type="text" name="sector"></label><br>
+            <label>Taille : <input type="text" name="size"></label><br>
+            <label>Description : <input type="text" name="description"></label><br>
+            <label>Site web : <input type="text" name="website"></label><br>
+            <label>Adresse : <input type="text" name="address"></label><br>
+            <label>Ville : <input type="text" name="city"></label><br>
+            <label>Pays : <input type="text" name="country"></label><br>
+            <label>Logo URL : <input type="text" name="logo_url"></label><br>
+            <label>Personne de contact : <input type="text" name="contact_person"></label><br>
+            <label>Poste du contact : <input type="text" name="contact_position"></label><br>
+        </div>
+        <div id="professional_fields" style="display:none;">
+            <label>Prénom : <input type="text" name="first_name"></label><br>
+            <label>Nom : <input type="text" name="last_name"></label><br>
+            <label>Entreprise : <input type="text" name="company"></label><br>
+            <label>Poste : <input type="text" name="position"></label><br>
+            <label>Domaines d'expertise (séparés par des virgules) : <input type="text" name="expertise_domains"></label><br>
+            <label>Années d'expérience : <input type="number" name="years_experience"></label><br>
+            <label>Téléphone : <input type="text" name="phone"></label><br>
+            <label>LinkedIn : <input type="text" name="linkedin_url"></label><br>
+            <label>Bio : <input type="text" name="bio"></label><br>
+        </div>
+        <button type="submit">S'inscrire</button>
+    </form>
+    <p>Déjà inscrit ? <a href="/login">Se connecter</a></p>
+</body>
+</html> 

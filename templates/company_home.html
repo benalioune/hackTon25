@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard Entreprise - StudyConnect</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-size: .875rem;
+        }
+        
+        .feather {
+            width: 16px;
+            height: 16px;
+            vertical-align: text-bottom;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            padding: 48px 0 0;
+            box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+        }
+        
+        @media (max-width: 767.98px) {
+            .sidebar {
+                top: 5rem;
+            }
+        }
+        
+        .sidebar-sticky {
+            position: relative;
+            top: 0;
+            height: calc(100vh - 48px);
+            padding-top: .5rem;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        
+        .sidebar .nav-link {
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .sidebar .nav-link.active {
+            color: #2470dc;
+        }
+        
+        .sidebar .nav-link:hover {
+            color: #2470dc;
+        }
+        
+        .sidebar .nav-link .feather {
+            margin-right: 4px;
+            color: #727272;
+        }
+        
+        .sidebar .nav-link.active .feather,
+        .sidebar .nav-link:hover .feather {
+            color: inherit;
+        }
+        
+        .sidebar-heading {
+            font-size: .75rem;
+            text-transform: uppercase;
+        }
+        
+        /* Navbar */
+        .navbar-brand {
+            padding-top: .75rem;
+            padding-bottom: .75rem;
+            font-size: 1rem;
+            background-color: rgba(0, 0, 0, .25);
+            box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+        }
+        
+        .navbar .navbar-toggler {
+            top: .25rem;
+            right: 1rem;
+        }
+        
+        .navbar .form-control {
+            padding: .75rem 1rem;
+            border-width: 0;
+            border-radius: 0;
+        }
+        
+        .form-control-dark {
+            color: #fff;
+            background-color: rgba(255, 255, 255, .1);
+            border-color: rgba(255, 255, 255, .1);
+        }
+        
+        .form-control-dark:focus {
+            border-color: transparent;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+        }
+        
+        /* Main content */
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+        
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+        
+        .b-example-divider {
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+        
+        .b-example-vr {
+            flex-shrink: 0;
+            width: 1.5rem;
+            height: 100vh;
+        }
+        
+        .bi {
+            vertical-align: -.125em;
+            fill: currentColor;
+        }
+        
+        .nav-scroller {
+            position: relative;
+            z-index: 2;
+            height: 2.75rem;
+            overflow-y: hidden;
+        }
+        
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="/">StudyConnect</a>
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-nav">
+            <div class="nav-item text-nowrap">
+                <a class="nav-link px-3" href="/logout">Déconnexion</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="position-sticky pt-3 sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/company/home">
+                                <i class="bi bi-house-door me-2"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/company/profile">
+                                <i class="bi bi-building me-2"></i>
+                                Profil Entreprise
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/company/opportunities">
+                                <i class="bi bi-briefcase me-2"></i>
+                                Mes Opportunités
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/company/create-opportunity">
+                                <i class="bi bi-plus-circle me-2"></i>
+                                Créer une opportunité
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/company/applications">
+                                <i class="bi bi-file-earmark-text me-2"></i>
+                                Candidatures reçues
+                                {% if applications_count > 0 %}
+                                <span class="badge bg-warning text-dark ms-2">{{ applications_count }}</span>
+                                {% endif %}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/company/students">
+                                <i class="bi bi-people me-2"></i>
+                                Étudiants correspondants
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/company/analytics">
+                                <i class="bi bi-graph-up me-2"></i>
+                                Analytics
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/company/notifications">
+                                <i class="bi bi-bell me-2"></i>
+                                Notifications
+                                {% if notifications_count > 0 %}
+                                <span class="badge bg-danger ms-2">{{ notifications_count }}</span>
+                                {% endif %}
+                            </a>
+                        </li>
+                    </ul>
+
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
+                        <span>Actions rapides</span>
+                    </h6>
+                    <ul class="nav flex-column mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/company/create-opportunity">
+                                <i class="bi bi-plus-square me-2"></i>
+                                Nouvelle opportunité
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/company/applications">
+                                <i class="bi bi-envelope me-2"></i>
+                                Voir candidatures
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Dashboard</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group me-2">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Exporter</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Partager</button>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                            <i class="bi bi-calendar3"></i>
+                            Cette semaine
+                        </button>
+                    </div>
+                </div>
+
+                <h2>Opportunités publiées</h2>
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Titre</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Localisation</th>
+                                <th scope="col">Date de publication</th>
+                                <th scope="col">Candidatures</th>
+                                <th scope="col">Statut</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if company_opportunities %}
+                                {% for opportunity in company_opportunities %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ opportunity.title }}</td>
+                                    <td>
+                                        <span class="badge bg-primary">{{ opportunity.type }}</span>
+                                    </td>
+                                    <td>{{ opportunity.location or 'Non spécifié' }}</td>
+                                    <td>{{ opportunity.created_at.split('T')[0] if opportunity.created_at else 'N/A' }}</td>
+                                    <td>
+                                        <span class="badge bg-info">{{ opportunity.applications_count or 0 }}</span>
+                                    </td>
+                                    <td>
+                                        {% if opportunity.status == 'active' %}
+                                            <span class="badge bg-success">Active</span>
+                                        {% elif opportunity.status == 'draft' %}
+                                            <span class="badge bg-secondary">Brouillon</span>
+                                        {% else %}
+                                            <span class="badge bg-warning text-dark">{{ opportunity.status }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" onclick="viewOpportunity('{{ opportunity.id }}')">
+                                            <i class="bi bi-eye"></i> Voir
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-secondary" onclick="editOpportunity('{{ opportunity.id }}')">
+                                            <i class="bi bi-pencil"></i> Modifier
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="8" class="text-center text-muted">
+                                        <i class="bi bi-inbox"></i> Aucune opportunité publiée
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+
+                {% if company_opportunities %}
+                <div class="d-flex justify-content-center mt-4">
+                    <nav aria-label="Navigation des opportunités">
+                        <ul class="pagination">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Précédent</a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">Suivant</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                {% endif %}
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function viewOpportunity(opportunityId) {
+            // Rediriger vers la page de détail de l'opportunité
+            window.location.href = `/company/opportunity/${opportunityId}`;
+        }
+        
+        function editOpportunity(opportunityId) {
+            // Rediriger vers la page de modification de l'opportunité
+            window.location.href = `/company/opportunity/${opportunityId}/edit`;
+        }
+    </script>
+</body>
+</html> 
